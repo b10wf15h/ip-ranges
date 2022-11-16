@@ -5,6 +5,7 @@ require "ipaddr"
 read_ips = File.read('data/list_test').split("\n")
 
 ips = []
+# convert Ips to the integer values
 read_ips.each do |ip|
   ips << IPAddr.new(ip).to_i
 end
@@ -33,4 +34,4 @@ ranges.each do |range|
 end
 
 # print list
-p list
+puts list.join("\n")
