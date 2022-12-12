@@ -40,7 +40,7 @@ unless mandatory_args.select{ |param| options[param].nil? }.empty?
 end
 
 # read and parse list of the ips
-read_ips = File.read('data/sitime_list').split("\n")
+read_ips = File.read(options[:path]).split("\n")
 
 ips = []
 # convert Ips to the integer values
