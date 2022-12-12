@@ -1,8 +1,46 @@
 # require ipaddr lib
 require "ipaddr"
+require 'optparse'
+
+# init options
+options = {}
+
+# init args
+arg = OptionParser.new
+arg.banner = 'Ip Ranges'
+arg.separator ''
+arg.separator 'Create ip ranges from ip list'
+arg.separator ''
+arg.separator 'Usage: range [options]'
+arg.separator ''
+arg.separator 'Options:'
+arg.on('-p', '--path path', 'Path to the IP list file (required).') { |value| options[:path]   = value }
+arg.separator ''
+
+arg.separator 'Other options:'
+arg.on('-h', '--help')    { puts arg.to_s; exit }
+arg.on('-v', '--version') { puts version; exit }
+arg.separator ''
+
+# parse arguments
+begin
+  arg.parse!(ARGV)
+rescue OptionParser::MissingArgument
+  puts "Please specify valid arguments."
+  exit(1)
+end
+
+# set a mandatory options
+mandatory_args = [:path]
+
+# raise a exception in case mandatory fields are missing
+unless mandatory_args.select{ |param| options[param].nil? }.empty?
+  puts arg.to_s
+  exit(1)
+end
 
 # read and parse list of the ips
-read_ips = File.read('data/list_test').split("\n")
+read_ips = File.read('data/sitime_list').split("\n")
 
 ips = []
 # convert Ips to the integer values
